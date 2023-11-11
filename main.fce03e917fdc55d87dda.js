@@ -40,6 +40,18 @@ __webpack_require__(5666);
 /***/ 9837:
 /***/ (function() {
 
+function hat() {
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+    console.log(document.documentElement.scrollTop);
+    if (document.documentElement.scrollTop >= 100) {
+      header.style.backgroundColor = "#0063ff";
+    } else {
+      header.style.backgroundColor = "";
+    }
+  });
+}
+hat();
 function slider() {
   let preview = document.querySelector('.home_slider_control_left');
   let next = document.querySelector('.home_slider_control_right');
@@ -49,8 +61,21 @@ function slider() {
   let slideActive = 0;
   sliders[slideActive].classList.add('sliderAct');
   pointActive[slideActive].classList.add('sActive');
+  let arr = Array(...pointActive);
+  arr.forEach((item, index) => {
+    //item.classList.remove('sActive');
+    item.addEventListener('click', () => {
+      console.log(item);
+      arr.forEach(it => {
+        it.classList.remove('sActive');
+      });
+      item.classList.add('sActive');
+      sliders[slideActive].classList.remove('sliderAct');
+      sliders[index].classList.add('sliderAct');
+      slideActive = index;
+    });
+  });
   next.addEventListener('click', () => {
-    //console.log(slideActive)
     if (sliders[slideActive].firstElementChild.played) {
       sliders[slideActive].firstElementChild.pause();
       button.style.opacity = '1';
